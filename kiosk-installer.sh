@@ -27,13 +27,13 @@ id -u kiosk &>/dev/null || useradd -m kiosk -g kiosk -s /bin/bash
 # rights
 chown -R kiosk:kiosk /home/kiosk
 
-# remove virtual consoles
+# don't remove virtual consoles
 if [ -e "/etc/X11/xorg.conf" ]; then
   mv /etc/X11/xorg.conf /etc/X11/xorg.conf.backup
 fi
 cat > /etc/X11/xorg.conf << EOF
 Section "ServerFlags"
-    Option "DontVTSwitch" "true"
+    Option "DontVTSwitch" "false"
 EndSection
 EOF
 
@@ -48,6 +48,7 @@ user-session=openbox
 EOF
 
 # create autostart
+# Replace xrandr --auto with xrandr -o left or right for vertical kiosk
 if [ -e "/home/kiosk/.config/openbox/autostart" ]; then
   mv /home/kiosk/.config/openbox/autostart /home/kiosk/.config/openbox/autostart.backup
 fi
