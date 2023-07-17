@@ -11,6 +11,8 @@ apt-get install \
     openbox \
     lightdm \
     locales \
+    docker \
+    lf \
     -y
 
 # dir
