@@ -12,8 +12,13 @@ apt-get install \
     lightdm \
     locales \
     docker.io \
+    ssh\
     lf \
+    isc-dhcp-server \
     -y
+
+# Enable ssh server
+service ssh start
 
 # dir
 mkdir -p /home/kiosk/.config/openbox
@@ -46,6 +51,36 @@ cat > /etc/lightdm/lightdm.conf << EOF
 autologin-user=kiosk
 user-session=openbox
 EOF
+
+
+# create DHCP SERVER on eth0
+if [ -e "/etc/network/interfaces" ]; then
+  mv /etc/network/interfaces /etc/network/interfaces.backup
+fi
+cat > /etc/network/interfaces << EOF
+auto eth0
+iface eth0 inet static
+address 10.0.83.2 # server's IP address
+netmask 255.255.255.0
+network 10.0.83.0
+broadcast 10.0.83.255
+gateway 10.0.83.1 #router's IP address
+EOF
+if [ -e "/etc/dhcp/dhcpd.conf" ]; then
+  mv /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.backup
+fi
+cat > /etc/dhcp/dhcpd.conf << EOF
+auto eth0
+iface eth0 inet static
+address 10.0.83.2 # server's IP address
+netmask 255.255.255.0
+network 10.0.83.0
+broadcast 10.0.83.255
+gateway 10.0.83.1 #router's IP address
+EOF
+/etc/init.d/isc-dhcp-server restart
+ifup eth0
+
 
 # create autostart
 # Replace xrandr --auto with xrandr -o left or right for vertical kiosk
