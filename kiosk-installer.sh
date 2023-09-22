@@ -4,18 +4,7 @@
 apt-get update
 
 # get software
-apt-get install \
-	unclutter \
-    xorg \
-    chromium \
-    openbox \
-    lightdm \
-    locales \
-    docker.io \
-    ssh\
-    lf \
-    isc-dhcp-server \
-    -y
+apt-get install unclutter xorg chromium openbox lightdm locales ssh isc-dhcp-server -y
 
 # Enable ssh server
 service ssh start
