@@ -78,7 +78,7 @@ ExecStart=-/sbin/agetty --autologin kiosk --noclear %I $TERM
 EOF
 
 # autostart startx
-cat > /home/kiosk/.bashrc << EOF
+cat > /home/kiosk/.bash_profile << EOF
 startx
 EOF
 
