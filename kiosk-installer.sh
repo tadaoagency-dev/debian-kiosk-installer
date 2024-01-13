@@ -70,10 +70,16 @@ EOF
 /etc/init.d/isc-dhcp-server restart
 ifup eth0
 
+# crea autologin
 cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin kiosk --noclear %I $TERM
+EOF
+
+# autostart startx
+cat > /home/kiosk/.bashrc << EOF
+startx
 EOF
 
 # create autostart
