@@ -70,6 +70,11 @@ EOF
 /etc/init.d/isc-dhcp-server restart
 ifup eth0
 
+cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin kiosk --noclear %I $TERM
+EOF
 
 # create autostart
 # Replace xrandr --auto with xrandr -o left or right for vertical kiosk
