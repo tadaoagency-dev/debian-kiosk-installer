@@ -77,9 +77,14 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin kiosk --noclear %I $TERM
 EOF
 
-# autostart startx
+# autostart startx e rimozione screensaver
 cat > /home/kiosk/.bash_profile << EOF
 startx
+
+xset -dpms
+setterm -blank 0 -powerdown 0
+
+xset s off
 EOF
 
 # create autostart
